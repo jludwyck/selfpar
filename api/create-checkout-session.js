@@ -1,4 +1,3 @@
-console.log("🔑 Stripe key (first 10 chars):", process.env.STRIPE_SECRET_KEY?.slice(0, 10));
 const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 
 export default async function handler(req, res) {
@@ -6,8 +5,10 @@ export default async function handler(req, res) {
     try {
       const { items } = req.body;
 
+      console.log('📦 Stripe Checkout items:', items);
+
       const lineItems = items.map((item) => ({
-        price: item.priceId,
+        price: item.priceId,  // ← this is the fix
         quantity: item.quantity,
       }));
 
@@ -19,10 +20,10 @@ export default async function handler(req, res) {
         cancel_url: `${req.headers.origin}/cancel`,
       });
 
-      res.status(200).json({ url: session.url });
-    } catch (err) {
-      console.error('🔥 Stripe checkout session creation error:', err);
-      res.status(500).json({ error: err.message });
+      return res.status(200).json({ url: session.url });
+    } catch (error) {
+      console.error('🔥 Stripe checkout session creation error:', error);
+      return res.status(500).json({ error: 'Stripe checkout failed.' });
     }
   } else {
     res.setHeader('Allow', 'POST');
