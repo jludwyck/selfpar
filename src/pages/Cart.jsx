@@ -5,7 +5,9 @@ export default function Cart() {
   const { cartItems, removeFromCart } = useCart();
 
   const getTotal = () => {
-    return cartItems.reduce((total, item) => total + item.price * item.quantity, 0).toFixed(2);
+    return cartItems
+      .reduce((total, item) => total + item.price * item.quantity, 0)
+      .toFixed(2);
   };
 
   return (
@@ -17,11 +19,16 @@ export default function Cart() {
       ) : (
         <div className="space-y-6">
           {cartItems.map((item) => (
-            <div key={item.id} className="flex justify-between items-center bg-white p-4 rounded shadow">
+            <div
+              key={item.id}
+              className="flex justify-between items-center bg-white p-4 rounded shadow"
+            >
               <div>
                 <h2 className="text-xl font-semibold">{item.name}</h2>
                 <p className="text-gray-600">Quantity: {item.quantity}</p>
-                <p className="text-gray-600">${(item.price * item.quantity).toFixed(2)}</p>
+                <p className="text-gray-600">
+                  ${(item.price * item.quantity).toFixed(2)}
+                </p>
               </div>
               <button
                 onClick={() => removeFromCart(item.id)}
