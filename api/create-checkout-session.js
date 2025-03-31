@@ -1,5 +1,3 @@
-// /api/create-checkout-session.js
-
 const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 
 export default async function handler(req, res) {
@@ -8,7 +6,7 @@ export default async function handler(req, res) {
       const { items } = req.body;
 
       const lineItems = items.map((item) => ({
-        price: item.priceId, // Stripe expects this to be called `price`
+        price: item.priceId,
         quantity: item.quantity,
       }));
 
