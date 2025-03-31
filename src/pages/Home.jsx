@@ -9,19 +9,19 @@ export default function Home() {
     id: 'starter',
     name: 'Starter Pack',
     price: 14.99,
-    priceId: 'price_1R8awrL2lJunKSvxJu5D99WU'
+    priceId: 'price_1R8cmbL2lJunKSvx864trGh6' // TEST mode
   };
   const standard = {
     id: 'standard',
     name: 'Standard Pack',
     price: 24.99,
-    priceId: 'price_1R8axZL2lJunKSvx5vtn8CTg'
+    priceId: 'price_1R8cn2L2lJunKSvxBr9U1AGo' // TEST mode
   };
   const annual = {
     id: 'annual',
     name: 'Annual Pack',
     price: 69.99,
-    priceId: 'price_1R8ayeL2lJunKSvx3vmUZIWA'
+    priceId: 'price_1R8cnML2lJunKSvxBEbEy8Jg' // TEST mode
   };
 
   const cartCount = cartItems.reduce((total, item) => total + item.quantity, 0);
@@ -31,7 +31,7 @@ export default function Home() {
       {/* Header with logo, version, and cart */}
       <header className="flex justify-between items-center px-6 py-4 bg-white shadow sticky top-0 z-50">
         <Link to="/" className="text-xl font-bold text-green-800">SelfPar</Link>
-        <div className="text-sm font-bold text-gray-500">v1.0.18</div>
+        <div className="text-sm font-bold text-gray-500">v1.0.20</div>
         <Link
           to="/cart"
           className="bg-green-800 text-white px-4 py-2 rounded hover:bg-green-700"
