@@ -1,6 +1,13 @@
 import React from 'react';
+import { useCart } from '../context/CartContext';
 
-export default function App() {
+export default function Home() {
+  const { addToCart } = useCart();
+
+  const starter = { id: 'starter', name: 'Starter Pack', price: 14.99 };
+  const standard = { id: 'standard', name: 'Standard Pack', price: 24.99 };
+  const annual = { id: 'annual', name: 'Annual Pack', price: 69.99 };
+
   return (
     <div className="min-h-screen bg-gray-100 text-gray-800">
       {/* Hero Section */}
@@ -56,21 +63,30 @@ export default function App() {
           <div className="bg-white p-6 rounded shadow">
             <h3 className="text-xl font-semibold mb-2">Starter Pack</h3>
             <p className="mb-4">3 Cards · Try it out · $14.99</p>
-            <button className="bg-green-800 text-white py-2 px-4 rounded hover:bg-green-700">
+            <button
+              onClick={() => addToCart(starter)}
+              className="bg-green-800 text-white py-2 px-4 rounded hover:bg-green-700"
+            >
               Add to Cart
             </button>
           </div>
           <div className="bg-white p-6 rounded shadow">
             <h3 className="text-xl font-semibold mb-2">Standard Pack</h3>
             <p className="mb-4">6 Cards · Most popular · $24.99</p>
-            <button className="bg-green-800 text-white py-2 px-4 rounded hover:bg-green-700">
+            <button
+              onClick={() => addToCart(standard)}
+              className="bg-green-800 text-white py-2 px-4 rounded hover:bg-green-700"
+            >
               Add to Cart
             </button>
           </div>
           <div className="bg-white p-6 rounded shadow">
             <h3 className="text-xl font-semibold mb-2">Annual Pack</h3>
             <p className="mb-4">20 Cards · For a full year · $69.99</p>
-            <button className="bg-green-800 text-white py-2 px-4 rounded hover:bg-green-700">
+            <button
+              onClick={() => addToCart(annual)}
+              className="bg-green-800 text-white py-2 px-4 rounded hover:bg-green-700"
+            >
               Add to Cart
             </button>
           </div>

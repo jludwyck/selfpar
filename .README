@@ -1,0 +1,22 @@
+# SelfPar
+
+**Master Life’s Rounds** – A golf-inspired habit tracker built with React, Vite, and Tailwind CSS.
+
+## 🏗️ Tech Stack
+- React
+- Vite
+- Tailwind CSS
+- Deployed via Vercel
+
+## 🚀 Getting Started
+
+1. Clone the repo  
+2. Run `npm install`  
+3. Run `npm run dev` to start the local dev server
+
+## 🔗 Live Preview
+Coming soon…
+
+---
+
+Created with intentionality and simplicity in mind.
