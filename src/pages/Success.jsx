@@ -1,32 +1,35 @@
+// src/pages/Success.jsx
 import React, { useEffect, useState } from 'react';
 import { useCart } from '../context/CartContext';
 import { Link } from 'react-router-dom';
 
 export default function Success() {
   const { cartItems, clearCart } = useCart();
-  const [orderDetails, setOrderDetails] = useState(null);
+  const [orderDetails, setOrderDetails] = useState([]);
 
   useEffect(() => {
-    // Clear cart after successful checkout
-    clearCart();
-
-    // Fetch or simulate the order details (usually from Stripe, but for now, using cartItems)
+    // Capture the cart items before clearing
     setOrderDetails(cartItems);
-  }, [clearCart, cartItems]);
+    clearCart();
+  }, []); // Empty dependency array so it only runs once on page load
 
   const getTotalPrice = () => {
-    return cartItems.reduce((total, item) => total + item.price * item.quantity, 0).toFixed(2);
+    return orderDetails
+      .reduce((total, item) => total + item.price * item.quantity, 0)
+      .toFixed(2);
   };
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center text-center bg-white px-4 py-16">
       <h1 className="text-4xl font-bold text-green-800 mb-6">🎉 Order Confirmed!</h1>
-      <p className="text-lg text-gray-700 mb-8">Thank you for your purchase. Your order has been successfully processed!</p>
+      <p className="text-lg text-gray-700 mb-8">
+        Thank you for your purchase. Your order has been successfully processed!
+      </p>
 
       <div className="w-full max-w-2xl bg-gray-100 p-6 rounded shadow-lg mb-8">
         <h2 className="text-2xl font-semibold text-gray-800 mb-4">Order Details</h2>
 
-        {orderDetails && orderDetails.length > 0 ? (
+        {orderDetails.length > 0 ? (
           <div className="space-y-4">
             {orderDetails.map((item) => (
               <div key={item.id} className="flex justify-between border-b pb-2 mb-2">
