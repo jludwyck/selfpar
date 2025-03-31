@@ -1,120 +1,57 @@
-Success Page
-1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11
-12
-13
-14
-15
-16
-17
-18
-19
-20
-21
-22
-23
-24
-25
-26
-27
-28
-29
-30
-31
-32
-33
-34
-35
-36
-37
-38
-39
-40
-41
-42
-43
-44
-45
-46
-47
-48
-49
-50
-51
-52
-53
-54
-55
-56
-57
-58
-59
-// src/pages/Success.jsx
 import React, { useEffect, useState } from 'react';
-import { useSearchParams } from 'react-router-dom';
+import { useCart } from '../context/CartContext';
+import { Link } from 'react-router-dom';
 
 export default function Success() {
-  const [searchParams] = useSearchParams();
-  const [sessionData, setSessionData] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const { cartItems, clearCart } = useCart();
+  const [orderDetails, setOrderDetails] = useState(null);
 
   useEffect(() => {
-    const sessionId = searchParams.get('session_id');
-    if (!sessionId) {
-      setError('No session ID found.');
-      setLoading(false);
-      return;
-    }
+    // Clear cart after successful checkout
+    clearCart();
 
-    fetch(`/api/get-checkout-session?session_id=${sessionId}`)
-      .then((res) => res.json())
-      .then((data) => {
-        setSessionData(data);
-        setLoading(false);
-      })
-      .catch((err) => {
-        setError('Failed to fetch session details.');
-        setLoading(false);
-      });
-  }, [searchParams]);
+    // Fetch or simulate the order details (usually from Stripe, but for now, using cartItems)
+    setOrderDetails(cartItems);
+  }, [clearCart, cartItems]);
 
-  if (loading) return <div className="p-6 text-center">Loading order details...</div>;
-  if (error) return <div className="p-6 text-center text-red-600">{error}</div>;
+  const getTotalPrice = () => {
+    return cartItems.reduce((total, item) => total + item.price * item.quantity, 0).toFixed(2);
+  };
 
   return (
-    <div className="max-w-2xl mx-auto px-6 py-12">
-      <h1 className="text-3xl font-bold mb-4 text-center text-green-700">✅ Order Confirmed!</h1>
-      <p className="text-center text-gray-700 mb-6">Thank you for your purchase, {sessionData.customer_details.name}!</p>
+    <div className="min-h-screen flex flex-col items-center justify-center text-center bg-white px-4 py-16">
+      <h1 className="text-4xl font-bold text-green-800 mb-6">🎉 Order Confirmed!</h1>
+      <p className="text-lg text-gray-700 mb-8">Thank you for your purchase. Your order has been successfully processed!</p>
 
-      <div className="bg-white shadow rounded p-6">
-        <h2 className="text-xl font-semibold mb-4">Order Summary</h2>
-        <ul className="divide-y divide-gray-200">
-          {sessionData.line_items?.data.map((item) => (
-            <li key={item.id} className="py-3 flex justify-between">
-              <span>{item.description}</span>
-              <span>
-                {item.quantity} × ${(item.price.unit_amount / 100).toFixed(2)} = ${
-                  ((item.price.unit_amount / 100) * item.quantity).toFixed(2)
-                }
-              </span>
-            </li>
-          ))}
-        </ul>
-        <p className="mt-4 font-bold text-right text-lg">
-          Total: ${(sessionData.amount_total / 100).toFixed(2)}
-        </p>
+      <div className="w-full max-w-2xl bg-gray-100 p-6 rounded shadow-lg mb-8">
+        <h2 className="text-2xl font-semibold text-gray-800 mb-4">Order Details</h2>
+
+        {orderDetails && orderDetails.length > 0 ? (
+          <div className="space-y-4">
+            {orderDetails.map((item) => (
+              <div key={item.id} className="flex justify-between border-b pb-2 mb-2">
+                <span className="font-medium text-gray-800">{item.name}</span>
+                <span className="text-gray-600">
+                  {item.quantity} x ${item.price.toFixed(2)}
+                </span>
+              </div>
+            ))}
+            <div className="flex justify-between font-semibold text-xl">
+              <span>Total</span>
+              <span>${getTotalPrice()}</span>
+            </div>
+          </div>
+        ) : (
+          <p className="text-gray-600">No order details available</p>
+        )}
       </div>
+
+      <Link
+        to="/"
+        className="bg-green-800 text-white py-3 px-6 rounded shadow hover:bg-green-700 transition"
+      >
+        Return to Home
+      </Link>
     </div>
   );
 }
-
