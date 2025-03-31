@@ -6,6 +6,9 @@ export function CartProvider({ children }) {
   const [cartItems, setCartItems] = useState([]);
 
   const addToCart = (product) => {
+    console.log('Adding to cart:', product.name);
+    console.log('Cart BEFORE adding:', cartItems); // Debugging line
+
     setCartItems((prevItems) => {
       const existingItem = prevItems.find((item) => item.id === product.id);
       if (existingItem) {
@@ -21,9 +24,7 @@ export function CartProvider({ children }) {
   };
 
   const removeFromCart = (id) => {
-    setCartItems((prevItems) =>
-      prevItems.filter((item) => item.id !== id)
-    );
+    setCartItems((prevItems) => prevItems.filter((item) => item.id !== id));
   };
 
   return (
