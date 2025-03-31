@@ -1,3 +1,4 @@
+console.log("🔑 Stripe key (first 10 chars):", process.env.STRIPE_SECRET_KEY?.slice(0, 10));
 const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 
 export default async function handler(req, res) {
