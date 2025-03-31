@@ -11,7 +11,7 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-gray-100 text-gray-800">
       {/* VERSION TAG */}
-      <div className="text-center py-2 text-sm text-gray-500 font-semibold">Version 1.0.4</div>
+      <div className="text-center py-2 text-sm text-gray-500 font-semibold">Version 1.0.6</div>
 
       {/* Hero Section */}
       <section
