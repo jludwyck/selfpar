@@ -1,5 +1,3 @@
-// api/create-checkout-session.js
-
 const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 
 export default async function handler(req, res) {
@@ -8,7 +6,7 @@ export default async function handler(req, res) {
       const { items } = req.body;
 
       const lineItems = items.map(item => ({
-        price: item.priceId, // Stripe price ID
+        price: item.priceId,
         quantity: item.quantity,
       }));
 
@@ -20,14 +18,13 @@ export default async function handler(req, res) {
         cancel_url: `${req.headers.origin}/cancel`,
       });
 
-      return res.status(200).json({ url: session.url });
-
-    } catch (error) {
-      console.error('Error creating checkout session:', error);
-      return res.status(500).json({ error: 'Internal server error' });
+      res.status(200).json({ url: session.url });
+    } catch (err) {
+      console.error('Error creating checkout session:', err.message);
+      res.status(500).json({ error: err.message });
     }
   } else {
-    res.setHeader('Allow', ['POST']);
-    return res.status(405).end('Method Not Allowed');
+    res.setHeader('Allow', 'POST');
+    res.status(405).end('Method Not Allowed');
   }
 }
