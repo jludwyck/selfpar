@@ -1,23 +1,9 @@
 import React from 'react';
 import { useCart } from '../context/CartContext';
+import { Link } from 'react-router-dom';
 
 export default function Cart() {
-  const { cartItems, removeFromCart, addToCart } = useCart();
-
-  const increaseQuantity = (item) => {
-    addToCart(item);
-  };
-
-  const decreaseQuantity = (item) => {
-    if (item.quantity === 1) {
-      removeFromCart(item.id);
-    } else {
-      removeFromCart(item.id);
-      for (let i = 0; i < item.quantity - 1; i++) {
-        addToCart(item);
-      }
-    }
-  };
+  const { cartItems, removeFromCart, increaseQuantity, decreaseQuantity } = useCart();
 
   const getTotal = () => {
     return cartItems
@@ -30,7 +16,12 @@ export default function Cart() {
       <h1 className="text-3xl font-bold mb-8 text-center">Your Cart</h1>
 
       {cartItems.length === 0 ? (
-        <p className="text-center text-gray-600">Your cart is empty.</p>
+        <div className="text-center text-gray-600">
+          <p>Your cart is empty.</p>
+          <Link to="/" className="mt-4 inline-block bg-green-800 text-white py-2 px-4 rounded hover:bg-green-700">
+            Continue Shopping
+          </Link>
+        </div>
       ) : (
         <div className="space-y-6">
           {cartItems.map((item) => (
@@ -40,24 +31,22 @@ export default function Cart() {
             >
               <div>
                 <h2 className="text-xl font-semibold">{item.name}</h2>
-                <div className="flex items-center space-x-2 mt-2">
+                <div className="flex items-center gap-2 mt-1">
                   <button
-                    onClick={() => decreaseQuantity(item)}
+                    onClick={() => decreaseQuantity(item.id)}
                     className="bg-gray-300 px-2 rounded hover:bg-gray-400"
                   >
-                    −
+                    -
                   </button>
-                  <span className="text-gray-800 font-medium">
-                    {item.quantity}
-                  </span>
+                  <span>Qty: {item.quantity}</span>
                   <button
-                    onClick={() => increaseQuantity(item)}
+                    onClick={() => increaseQuantity(item.id)}
                     className="bg-gray-300 px-2 rounded hover:bg-gray-400"
                   >
                     +
                   </button>
                 </div>
-                <p className="text-gray-600 mt-2">
+                <p className="text-gray-600 mt-1">
                   ${(item.price * item.quantity).toFixed(2)}
                 </p>
               </div>
@@ -75,6 +64,14 @@ export default function Cart() {
             <button className="mt-4 bg-green-800 text-white py-3 px-6 rounded hover:bg-green-700">
               Checkout (Coming Soon)
             </button>
+            <div className="mt-4">
+              <Link
+                to="/"
+                className="inline-block text-green-800 hover:underline text-sm"
+              >
+                ← Continue Shopping
+              </Link>
+            </div>
           </div>
         </div>
       )}
