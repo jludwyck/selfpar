@@ -1,14 +1,14 @@
-// api/create-checkout-session.js
-
-const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY); // ✅ No key in code
+const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 
 export default async function handler(req, res) {
   if (req.method === 'POST') {
     try {
       const { items } = req.body;
 
+      console.log("Received items:", items);
+
       const lineItems = items.map(item => ({
-        price: item.priceId, // ✅ Must be named "price"
+        price: item.priceId,
         quantity: item.quantity,
       }));
 
@@ -22,8 +22,8 @@ export default async function handler(req, res) {
 
       res.status(200).json({ url: session.url });
     } catch (err) {
-      console.error('Stripe error:', err);
-      res.status(500).json({ error: err.message });
+      console.error("🔥 Stripe checkout session creation error:", err); // More useful error message
+      res.status(500).json({ error: 'Stripe checkout failed. Check logs for details.' });
     }
   } else {
     res.setHeader('Allow', 'POST');
