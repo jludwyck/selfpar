@@ -1,23 +1,14 @@
 // api/create-checkout-session.js
 
-const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
+const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY); // ✅ No key in code
 
-/**
- * This is a Vercel Edge Function handler.
- * It receives a POST request with items in the cart,
- * and returns a Stripe Checkout session URL.
- */
 export default async function handler(req, res) {
   if (req.method === 'POST') {
     try {
       const { items } = req.body;
 
-      if (!items || !Array.isArray(items)) {
-        return res.status(400).json({ error: 'Invalid items in request.' });
-      }
-
       const lineItems = items.map(item => ({
-        price: item.priceId,
+        price: item.priceId, // ✅ Must be named "price"
         quantity: item.quantity,
       }));
 
@@ -31,8 +22,8 @@ export default async function handler(req, res) {
 
       res.status(200).json({ url: session.url });
     } catch (err) {
-      console.error('❌ Stripe error:', err.message);
-      res.status(500).json({ error: 'Internal Server Error' });
+      console.error('Stripe error:', err);
+      res.status(500).json({ error: err.message });
     }
   } else {
     res.setHeader('Allow', 'POST');
