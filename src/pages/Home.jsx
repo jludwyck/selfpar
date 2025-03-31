@@ -1,5 +1,5 @@
-import { useCart } from '../context/CartContext';
 import React from 'react';
+import { useCart } from '../context/CartContext';
 
 export default function Home() {
   const { addToCart } = useCart();
@@ -9,11 +9,9 @@ export default function Home() {
   const annual = { id: 'annual', name: 'Annual Pack', price: 69.99 };
 
   return (
-    <div className="min-h-screen bg-gray-100 text-gray-800 relative">
-      {/* Version Tag */}
-      <div className="absolute top-4 w-full text-center text-sm text-gray-500 z-50">
-        v1.0.1
-      </div>
+    <div className="min-h-screen bg-gray-100 text-gray-800">
+      {/* VERSION TAG */}
+      <div className="text-center py-2 text-sm text-gray-500 font-semibold">Version 1.0.3</div>
 
       {/* Hero Section */}
       <section
@@ -56,21 +54,39 @@ export default function Home() {
           <div className="bg-white p-6 rounded shadow">
             <h3 className="text-xl font-semibold mb-2">Starter Pack</h3>
             <p className="mb-4">3 Cards · Try it out · $14.99</p>
-            <button onClick={() => addToCart(starter)} className="bg-green-800 text-white py-2 px-4 rounded hover:bg-green-700">
+            <button
+              onClick={() => {
+                console.log('Adding to cart: Starter');
+                addToCart(starter);
+              }}
+              className="bg-green-800 text-white py-2 px-4 rounded hover:bg-green-700"
+            >
               Add to Cart
             </button>
           </div>
           <div className="bg-white p-6 rounded shadow">
             <h3 className="text-xl font-semibold mb-2">Standard Pack</h3>
             <p className="mb-4">6 Cards · Most popular · $24.99</p>
-            <button onClick={() => addToCart(standard)} className="bg-green-800 text-white py-2 px-4 rounded hover:bg-green-700">
+            <button
+              onClick={() => {
+                console.log('Adding to cart: Standard');
+                addToCart(standard);
+              }}
+              className="bg-green-800 text-white py-2 px-4 rounded hover:bg-green-700"
+            >
               Add to Cart
             </button>
           </div>
           <div className="bg-white p-6 rounded shadow">
             <h3 className="text-xl font-semibold mb-2">Annual Pack</h3>
             <p className="mb-4">20 Cards · For a full year · $69.99</p>
-            <button onClick={() => addToCart(annual)} className="bg-green-800 text-white py-2 px-4 rounded hover:bg-green-700">
+            <button
+              onClick={() => {
+                console.log('Adding to cart: Annual');
+                addToCart(annual);
+              }}
+              className="bg-green-800 text-white py-2 px-4 rounded hover:bg-green-700"
+            >
               Add to Cart
             </button>
           </div>
@@ -94,7 +110,7 @@ export default function Home() {
         </p>
       </section>
 
-      {/* Final CTA Banner */}
+      {/* Final CTA */}
       <section className="bg-green-800 text-white py-16 px-6 text-center">
         <h2 className="text-3xl font-bold mb-4">Ready to master your next round?</h2>
         <button className="bg-yellow-400 text-black font-semibold py-3 px-6 rounded shadow hover:bg-yellow-300">
