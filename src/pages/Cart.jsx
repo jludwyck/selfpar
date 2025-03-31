@@ -3,7 +3,7 @@ import { useCart } from '../context/CartContext';
 import { Link } from 'react-router-dom';
 
 export default function Cart() {
-  const { cartItems, removeFromCart, increaseQuantity, decreaseQuantity } = useCart();
+  const { cartItems, removeFromCart, updateQuantity } = useCart();
 
   const getTotal = () => {
     return cartItems
@@ -18,7 +18,10 @@ export default function Cart() {
       {cartItems.length === 0 ? (
         <div className="text-center text-gray-600">
           <p>Your cart is empty.</p>
-          <Link to="/" className="mt-4 inline-block bg-green-800 text-white py-2 px-4 rounded hover:bg-green-700">
+          <Link
+            to="/#shop"
+            className="mt-6 inline-block bg-green-800 text-white py-2 px-4 rounded hover:bg-green-700"
+          >
             Continue Shopping
           </Link>
         </div>
@@ -31,22 +34,22 @@ export default function Cart() {
             >
               <div>
                 <h2 className="text-xl font-semibold">{item.name}</h2>
-                <div className="flex items-center gap-2 mt-1">
+                <div className="flex items-center space-x-2 mt-2">
                   <button
-                    onClick={() => decreaseQuantity(item.id)}
-                    className="bg-gray-300 px-2 rounded hover:bg-gray-400"
+                    onClick={() => updateQuantity(item.id, item.quantity - 1)}
+                    className="px-2 bg-gray-200 rounded hover:bg-gray-300"
                   >
                     -
                   </button>
-                  <span>Qty: {item.quantity}</span>
+                  <span className="text-gray-700">{item.quantity}</span>
                   <button
-                    onClick={() => increaseQuantity(item.id)}
-                    className="bg-gray-300 px-2 rounded hover:bg-gray-400"
+                    onClick={() => updateQuantity(item.id, item.quantity + 1)}
+                    className="px-2 bg-gray-200 rounded hover:bg-gray-300"
                   >
                     +
                   </button>
                 </div>
-                <p className="text-gray-600 mt-1">
+                <p className="text-gray-600 mt-2">
                   ${(item.price * item.quantity).toFixed(2)}
                 </p>
               </div>
@@ -65,12 +68,12 @@ export default function Cart() {
               Checkout (Coming Soon)
             </button>
             <div className="mt-4">
-              <a
-                href="/#shop"
-                className="inline-block text-green-800 hover:underline text-sm"
+              <Link
+                to="/#shop"
+                className="text-green-700 underline hover:text-green-900"
               >
-                ← Continue Shopping
-              </a>
+                &larr; Continue Shopping
+              </Link>
             </div>
           </div>
         </div>
