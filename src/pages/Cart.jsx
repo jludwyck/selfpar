@@ -1,8 +1,9 @@
 import React from 'react';
 import { useCart } from '../context/CartContext';
+import { Link } from 'react-router-dom';
 
 export default function Cart() {
-  const { cartItems, removeFromCart, increaseQty, decreaseQty } = useCart();
+  const { cartItems, removeFromCart, updateQuantity } = useCart();
 
   const getTotal = () => {
     return cartItems
@@ -20,12 +21,13 @@ export default function Cart() {
 
       const data = await response.json();
       if (data.url) {
-        window.location.href = data.url; // Redirect to Stripe Checkout
+        window.location.href = data.url;
       } else {
-        console.error('Checkout error:', data);
+        alert('Something went wrong with checkout.');
       }
     } catch (error) {
       console.error('Checkout error:', error);
+      alert('Checkout failed.');
     }
   };
 
@@ -35,10 +37,7 @@ export default function Cart() {
 
       {cartItems.length === 0 ? (
         <p className="text-center text-gray-600">
-          Your cart is empty.{' '}
-          <a href="/#shop" className="text-green-700 underline">
-            Continue Shopping
-          </a>
+          Your cart is empty. <Link to="/#shop" className="text-green-700 underline">Continue Shopping</Link>
         </p>
       ) : (
         <div className="space-y-6">
@@ -49,22 +48,22 @@ export default function Cart() {
             >
               <div>
                 <h2 className="text-xl font-semibold">{item.name}</h2>
-                <div className="flex items-center gap-2 mt-2">
+                <div className="flex items-center space-x-2 mt-2">
                   <button
-                    onClick={() => decreaseQty(item.id)}
-                    className="px-3 py-1 bg-gray-200 rounded"
+                    onClick={() => updateQuantity(item.id, item.quantity - 1)}
+                    className="px-2 bg-gray-300 rounded"
                   >
-                    –
+                    -
                   </button>
                   <span>{item.quantity}</span>
                   <button
-                    onClick={() => increaseQty(item.id)}
-                    className="px-3 py-1 bg-gray-200 rounded"
+                    onClick={() => updateQuantity(item.id, item.quantity + 1)}
+                    className="px-2 bg-gray-300 rounded"
                   >
                     +
                   </button>
                 </div>
-                <p className="text-gray-600 mt-2">
+                <p className="text-gray-600 mt-1">
                   ${(item.price * item.quantity).toFixed(2)}
                 </p>
               </div>
