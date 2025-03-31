@@ -1,13 +1,14 @@
-import React from 'react';
 import { useCart } from '../context/CartContext';
+import React from 'react';
+
+
 
 export default function Home() {
   const { addToCart } = useCart();
 
-  const starter = { id: 'starter', name: 'Starter Pack', price: 14.99 };
-  const standard = { id: 'standard', name: 'Standard Pack', price: 24.99 };
-  const annual = { id: 'annual', name: 'Annual Pack', price: 69.99 };
-
+const starter = { id: 'starter', name: 'Starter Pack', price: 14.99 };
+const standard = { id: 'standard', name: 'Standard Pack', price: 24.99 };
+const annual = { id: 'annual', name: 'Annual Pack', price: 69.99 };
   return (
     <div className="min-h-screen bg-gray-100 text-gray-800">
       {/* Hero Section */}
