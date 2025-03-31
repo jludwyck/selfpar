@@ -1,15 +1,19 @@
 import React from 'react';
-import { Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Home from './pages/Home';
 import Cart from './pages/Cart';
+import Success from './pages/Success';
+import Cancel from './pages/Cancel';
 
 export default function App() {
   return (
-    <div className="min-h-screen bg-gray-100 text-gray-800">
+    <Router>
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/cart" element={<Cart />} />
+        <Route path="/success" element={<Success />} />
+        <Route path="/cancel" element={<Cancel />} />
       </Routes>
-    </div>
+    </Router>
   );
 }
