@@ -65,12 +65,12 @@ export default function Cart() {
               Checkout (Coming Soon)
             </button>
             <div className="mt-4">
-              <Link
-                to="/"
+              <a
+                href="/#shop"
                 className="inline-block text-green-800 hover:underline text-sm"
               >
                 ← Continue Shopping
-              </Link>
+              </a>
             </div>
           </div>
         </div>

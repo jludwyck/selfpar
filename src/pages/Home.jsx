@@ -11,7 +11,7 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-gray-100 text-gray-800">
       {/* VERSION TAG */}
-      <div className="text-center py-2 text-sm text-gray-500 font-semibold">Version 1.0.10</div>
+      <div className="text-center py-2 text-sm text-gray-500 font-semibold">Version 1.0.11</div>
 
       {/* Hero Section */}
       <section
@@ -48,7 +48,7 @@ export default function Home() {
       </section>
 
       {/* Product Packs Section */}
-      <section className="py-16 px-6 bg-gray-100 text-center">
+      <section id="shop" className="py-16 px-6 bg-gray-100 text-center">
         <h2 className="text-3xl font-bold mb-10">Shop the Scorecards</h2>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           <div className="bg-white p-6 rounded shadow">
