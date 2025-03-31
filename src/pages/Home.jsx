@@ -13,12 +13,13 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-gray-100 text-gray-800">
-      {/* Header with version and cart */}
+      {/* Header with logo, version, and cart */}
       <header className="flex justify-between items-center px-6 py-4 bg-white shadow sticky top-0 z-50">
-        <div className="text-sm font-bold text-gray-500 mx-auto">v1.0.0</div>
+        <Link to="/" className="text-xl font-bold text-green-800">SelfPar</Link>
+        <div className="text-sm font-bold text-gray-500">v1.0.15</div>
         <Link
           to="/cart"
-          className="absolute right-6 bg-green-800 text-white px-4 py-2 rounded hover:bg-green-700"
+          className="bg-green-800 text-white px-4 py-2 rounded hover:bg-green-700"
         >
           View Cart {cartCount > 0 && <span>({cartCount})</span>}
         </Link>
