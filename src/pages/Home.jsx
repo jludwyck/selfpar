@@ -1,17 +1,28 @@
-import { useCart } from '../context/CartContext';
 import React from 'react';
+import { useCart } from '../context/CartContext';
+import { Link } from 'react-router-dom';
 
 export default function Home() {
-  const { addToCart } = useCart();
+  const { addToCart, cartItems } = useCart();
 
   const starter = { id: 'starter', name: 'Starter Pack', price: 14.99 };
   const standard = { id: 'standard', name: 'Standard Pack', price: 24.99 };
   const annual = { id: 'annual', name: 'Annual Pack', price: 69.99 };
 
+  const cartCount = cartItems.reduce((total, item) => total + item.quantity, 0);
+
   return (
     <div className="min-h-screen bg-gray-100 text-gray-800">
-      {/* Version Tag */}
-      <div className="text-center py-2 bg-gray-200 text-sm font-semibold">v1.0.14</div>
+      {/* Header with version and cart */}
+      <header className="flex justify-between items-center px-6 py-4 bg-white shadow sticky top-0 z-50">
+        <div className="text-sm font-bold text-gray-500 mx-auto">v1.0.0</div>
+        <Link
+          to="/cart"
+          className="absolute right-6 bg-green-800 text-white px-4 py-2 rounded hover:bg-green-700"
+        >
+          View Cart {cartCount > 0 && <span>({cartCount})</span>}
+        </Link>
+      </header>
 
       {/* Hero Section */}
       <section
@@ -32,29 +43,17 @@ export default function Home() {
         <h2 className="text-3xl font-bold mb-10">How It Works</h2>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           <div className="p-4 bg-gray-50 rounded shadow">
-            <img
-              src="/images/set-your-round.jpg"
-              alt="Set Your Round"
-              className="mb-4 rounded"
-            />
+            <img src="/images/set-your-round.jpg" alt="Set Your Round" className="mb-4 rounded" />
             <h3 className="text-xl font-semibold mb-2">Set Your Round</h3>
             <p className="text-gray-600">Choose your 18-day timeline. Set your goals. Define your par.</p>
           </div>
           <div className="p-4 bg-gray-50 rounded shadow">
-            <img
-              src="/images/score-each-day.jpg"
-              alt="Score Each Day"
-              className="mb-4 rounded"
-            />
+            <img src="/images/score-each-day.jpg" alt="Score Each Day" className="mb-4 rounded" />
             <h3 className="text-xl font-semibold mb-2">Score Each Day</h3>
             <p className="text-gray-600">Mark 1 if completed, 2 if missed. Track birdies and bogeys too.</p>
           </div>
           <div className="p-4 bg-gray-50 rounded shadow">
-            <img
-              src="/images/reflect-and-reset.jpg"
-              alt="Reflect and Reset"
-              className="mb-4 rounded"
-            />
+            <img src="/images/reflect-and-reset.jpg" alt="Reflect and Reset" className="mb-4 rounded" />
             <h3 className="text-xl font-semibold mb-2">Reflect and Reset</h3>
             <p className="text-gray-600">Review your round. See your progress. Start the next one stronger.</p>
           </div>
