@@ -5,9 +5,24 @@ import { Link } from 'react-router-dom';
 export default function Home() {
   const { addToCart, cartItems } = useCart();
 
-  const starter = { id: 'starter', name: 'Starter Pack', price: 14.99 };
-  const standard = { id: 'standard', name: 'Standard Pack', price: 24.99 };
-  const annual = { id: 'annual', name: 'Annual Pack', price: 69.99 };
+  const starter = {
+    id: 'starter',
+    name: 'Starter Pack',
+    price: 14.99,
+    priceId: 'price_1R8awrL2lJunKSvxJu5D99WU'
+  };
+  const standard = {
+    id: 'standard',
+    name: 'Standard Pack',
+    price: 24.99,
+    priceId: 'price_1R8axZL2lJunKSvx5vtn8CTg'
+  };
+  const annual = {
+    id: 'annual',
+    name: 'Annual Pack',
+    price: 69.99,
+    priceId: 'price_1R8ayeL2lJunKSvx3vmUZIWA'
+  };
 
   const cartCount = cartItems.reduce((total, item) => total + item.quantity, 0);
 
@@ -16,7 +31,7 @@ export default function Home() {
       {/* Header with logo, version, and cart */}
       <header className="flex justify-between items-center px-6 py-4 bg-white shadow sticky top-0 z-50">
         <Link to="/" className="text-xl font-bold text-green-800">SelfPar</Link>
-        <div className="text-sm font-bold text-gray-500">v1.0.16</div>
+        <div className="text-sm font-bold text-gray-500">v1.0.18</div>
         <Link
           to="/cart"
           className="bg-green-800 text-white px-4 py-2 rounded hover:bg-green-700"
