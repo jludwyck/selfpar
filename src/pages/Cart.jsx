@@ -8,6 +8,24 @@ export default function Cart() {
     return cartItems.reduce((total, item) => total + item.price * item.quantity, 0).toFixed(2);
   };
 
+  const checkout = async () => {
+    const res = await fetch('/api/create-checkout-session', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        items: cartItems.map(item => ({
+          priceId: item.priceId, // Stripe Price ID
+          quantity: item.quantity,
+        })),
+      }),
+    });
+
+    const { url } = await res.json();
+    window.location.href = url; // Redirect to the Stripe Checkout page
+  };
+
   return (
     <div className="px-6 py-16 max-w-3xl mx-auto">
       <h1 className="text-3xl font-bold mb-8 text-center">Your Cart</h1>
@@ -48,7 +66,10 @@ export default function Cart() {
 
           <div className="text-right mt-8">
             <p className="text-lg font-bold">Total: ${getTotal()}</p>
-            <button className="mt-4 bg-green-800 text-white py-3 px-6 rounded hover:bg-green-700">
+            <button
+              onClick={checkout}
+              className="mt-4 bg-green-800 text-white py-3 px-6 rounded hover:bg-green-700"
+            >
               Checkout (Coming Soon)
             </button>
             <a href="/#shop" className="ml-6 text-green-800 underline hover:text-green-600">
