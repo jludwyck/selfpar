@@ -2,7 +2,22 @@ import React from 'react';
 import { useCart } from '../context/CartContext';
 
 export default function Cart() {
-  const { cartItems, removeFromCart } = useCart();
+  const { cartItems, removeFromCart, addToCart } = useCart();
+
+  const increaseQuantity = (item) => {
+    addToCart(item);
+  };
+
+  const decreaseQuantity = (item) => {
+    if (item.quantity === 1) {
+      removeFromCart(item.id);
+    } else {
+      removeFromCart(item.id);
+      for (let i = 0; i < item.quantity - 1; i++) {
+        addToCart(item);
+      }
+    }
+  };
 
   const getTotal = () => {
     return cartItems
@@ -25,8 +40,24 @@ export default function Cart() {
             >
               <div>
                 <h2 className="text-xl font-semibold">{item.name}</h2>
-                <p className="text-gray-600">Quantity: {item.quantity}</p>
-                <p className="text-gray-600">
+                <div className="flex items-center space-x-2 mt-2">
+                  <button
+                    onClick={() => decreaseQuantity(item)}
+                    className="bg-gray-300 px-2 rounded hover:bg-gray-400"
+                  >
+                    −
+                  </button>
+                  <span className="text-gray-800 font-medium">
+                    {item.quantity}
+                  </span>
+                  <button
+                    onClick={() => increaseQuantity(item)}
+                    className="bg-gray-300 px-2 rounded hover:bg-gray-400"
+                  >
+                    +
+                  </button>
+                </div>
+                <p className="text-gray-600 mt-2">
                   ${(item.price * item.quantity).toFixed(2)}
                 </p>
               </div>
