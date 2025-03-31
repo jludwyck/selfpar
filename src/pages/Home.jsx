@@ -31,7 +31,7 @@ export default function Home() {
       {/* Header with logo, version, and cart */}
       <header className="flex justify-between items-center px-6 py-4 bg-white shadow sticky top-0 z-50">
         <Link to="/" className="text-xl font-bold text-green-800">SelfPar</Link>
-        <div className="text-sm font-bold text-gray-500">v1.0.31</div>
+        <div className="text-sm font-bold text-gray-500">v1.0.32</div>
         <Link
           to="/cart"
           className="bg-green-800 text-white px-4 py-2 rounded hover:bg-green-700"
