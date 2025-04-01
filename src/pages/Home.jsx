@@ -1,3 +1,4 @@
+// src/pages/Home.jsx
 import React from 'react';
 import { useCart } from '../context/CartContext';
 import { Link } from 'react-router-dom';
@@ -6,7 +7,7 @@ import { ShoppingCart } from 'lucide-react';
 
 export default function Home() {
   const { addToCart, cartItems } = useCart();
-  const { openDrawer } = useDrawer(); // 👈 bring in drawer trigger
+  const { openDrawer } = useDrawer();
 
   const starter = {
     id: 'starter',
@@ -36,10 +37,14 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-gray-100 text-gray-800">
-      {/* Header with logo, version, and cart */}
+      {/* Header with logo, navigation, and cart */}
       <header className="flex justify-between items-center px-6 py-4 bg-white shadow sticky top-0 z-50">
         <Link to="/" className="text-xl font-bold text-green-800">SelfPar</Link>
-        <div className="text-sm font-bold text-gray-500">v1.0.37</div>
+        <nav className="hidden md:flex space-x-6">
+          <a href="#shop" className="text-gray-700 hover:text-green-800 font-medium">Shop</a>
+          <a href="#how" className="text-gray-700 hover:text-green-800 font-medium">How It Works</a>
+          <a href="#why" className="text-gray-700 hover:text-green-800 font-medium">Why It Works</a>
+        </nav>
         <button onClick={openDrawer} className="relative">
           <ShoppingCart className="w-6 h-6 text-green-800" />
           {cartCount > 0 && (
@@ -65,7 +70,7 @@ export default function Home() {
       </section>
 
       {/* How It Works Section */}
-      <section className="py-16 px-6 bg-white text-center">
+      <section id="how" className="py-16 px-6 bg-white text-center">
         <h2 className="text-3xl font-bold mb-10">How It Works</h2>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           <div className="p-4 bg-gray-50 rounded shadow">
@@ -119,7 +124,7 @@ export default function Home() {
       </section>
 
       {/* Why It Works Section */}
-      <section className="py-16 px-6 bg-gray-100 text-center">
+      <section id="why" className="py-16 px-6 bg-gray-100 text-center">
         <h2 className="text-3xl font-bold mb-6">Why SelfPar Works</h2>
         <p className="max-w-2xl mx-auto text-lg text-gray-700">
           It’s paper on purpose. Designed to feel intentional. No batteries. No notifications. Just better habits.

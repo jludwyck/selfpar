@@ -2,8 +2,8 @@
 import React, { useState } from 'react';
 import { useCart } from '../context/CartContext';
 import { useNavigate } from 'react-router-dom';
-import { countries } from '../data/countries';
-import { states } from '../data/states';
+import countries from '../data/countries';
+import states from '../data/states';
 
 export default function CartDrawer({ isOpen, onClose }) {
   const { cartItems, increaseQuantity, decreaseQuantity, removeFromCart } = useCart();
@@ -14,9 +14,7 @@ export default function CartDrawer({ isOpen, onClose }) {
   const [zip, setZip] = useState('');
   const [shippingCost, setShippingCost] = useState(null);
 
-  const getTotal = () =>
-    cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
-
+  const getTotal = () => cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
   const subtotal = getTotal();
   const total = shippingCost !== null ? subtotal + shippingCost : subtotal;
   const progress = Math.min((subtotal / 50) * 100, 100);
@@ -82,9 +80,7 @@ export default function CartDrawer({ isOpen, onClose }) {
                 </div>
               </div>
               <div className="text-right">
-                <p className="text-sm text-gray-800">
-                  ${(item.price * item.quantity).toFixed(2)}
-                </p>
+                <p className="text-sm text-gray-800">${(item.price * item.quantity).toFixed(2)}</p>
                 <button
                   onClick={() => removeFromCart(item.id)}
                   className="text-xs text-red-500 hover:underline mt-1"
@@ -104,9 +100,8 @@ export default function CartDrawer({ isOpen, onClose }) {
             onChange={(e) => setCountry(e.target.value)}
             className="w-full border px-2 py-1 rounded mb-2"
           >
-            <option value="">Select Country</option>
             {countries.map((c) => (
-              <option key={c.code} value={c.name}>{c.name}</option>
+              <option key={c} value={c}>{c}</option>
             ))}
           </select>
           <select
