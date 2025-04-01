@@ -50,6 +50,15 @@ export function CartProvider({ children }) {
     );
   };
 
+  const updateQuantity = (id, quantity) => {
+    if (quantity < 1) return;
+    setCartItems((prev) =>
+      prev.map((item) =>
+        item.id === id ? { ...item, quantity } : item
+      )
+    );
+  };
+
   const clearCart = () => {
     setCartItems([]);
     localStorage.removeItem('cartItems');
@@ -63,6 +72,7 @@ export function CartProvider({ children }) {
         removeFromCart,
         increaseQuantity,
         decreaseQuantity,
+        updateQuantity,
         clearCart,
       }}
     >
