@@ -119,7 +119,7 @@ export default function Home() {
       <section className="relative py-20 px-6 text-center text-white bg-[#181818] overflow-hidden">
         {/* Topo Image Overlay */}
         <div
-          className="absolute inset-0 opacity-0"
+          className="absolute inset-0 opacity-100"
           style={{
             backgroundImage: "url('/images/gold topo_1920.png')",
             backgroundSize: 'cover',
