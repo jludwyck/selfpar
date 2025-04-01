@@ -42,20 +42,13 @@ export function CartProvider({ children }) {
 
   const decreaseQuantity = (id) => {
     setCartItems((prev) =>
-      prev.map((item) =>
-        item.id === id
-          ? { ...item, quantity: Math.max(1, item.quantity - 1) }
-          : item
-      )
-    );
-  };
-
-  const updateQuantity = (id, quantity) => {
-    if (quantity < 1) return;
-    setCartItems((prev) =>
-      prev.map((item) =>
-        item.id === id ? { ...item, quantity } : item
-      )
+      prev
+        .map((item) =>
+          item.id === id
+            ? { ...item, quantity: item.quantity - 1 }
+            : item
+        )
+        .filter((item) => item.quantity > 0) // Remove items with quantity 0
     );
   };
 
@@ -72,7 +65,6 @@ export function CartProvider({ children }) {
         removeFromCart,
         increaseQuantity,
         decreaseQuantity,
-        updateQuantity,
         clearCart,
       }}
     >
