@@ -116,47 +116,50 @@ export default function Home() {
 
       {/* Testimonials */}
       {/* Testimonials */}
-      <section
-        className="py-16 px-6 text-center bg-cover bg-center"
-        style={{
-          backgroundColor: '#181818',
-          backgroundImage: "url('/images/gold topo_1920.png')",
-          backgroundBlendMode: 'multiply',
-        }}
-      >
-        <h2 className="text-4xl font-bold mb-12 text-white drop-shadow">What People Are Saying</h2>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
-          {/* Testimonial 1 */}
-          <div className="bg-white bg-opacity-90 text-gray-800 rounded-xl p-6 shadow-lg">
-            <img
-              src="/images/testimonial-marcus.jpg"
-              alt="Marcus"
-              className="w-60 h-60 object-cover rounded-lg mx-auto mb-4 shadow-md"
-            />
-            <p className="italic mb-3">“SelfPar helped me finally stay consistent with my habits. There’s something about putting pencil to paper that makes it stick.”</p>
-            <p className="font-semibold">— Marcus H.</p>
-          </div>
+      <section className="relative py-20 px-6 text-center text-white bg-[#181818] overflow-hidden">
+        {/* Topo Image Overlay */}
+        <div
+          className="absolute inset-0 opacity-30"
+          style={{
+            backgroundImage: "url('/images/gold topo_1920.png')",
+            backgroundSize: 'cover',
+            backgroundRepeat: 'no-repeat',
+            backgroundPosition: 'center',
+            zIndex: 0,
+          }}
+        />
 
-          {/* Testimonial 2 */}
-          <div className="bg-white bg-opacity-90 text-gray-800 rounded-xl p-6 shadow-lg">
-            <img
-              src="/images/testimonial-douglas.jpg"
-              alt="Douglas"
-              className="w-60 h-60 object-cover rounded-lg mx-auto mb-4 shadow-md"
-            />
-            <p className="italic mb-3">“I’ve tried every app. This is the first system that feels real and doesn’t overwhelm me. It's built for people who think better on paper.”</p>
-            <p className="font-semibold">— Douglas V.</p>
-          </div>
-
-          {/* Testimonial 3 */}
-          <div className="bg-white bg-opacity-90 text-gray-800 rounded-xl p-6 shadow-lg">
-            <img
-              src="/images/testimonial-shawn.jpg"
-              alt="Shawn"
-              className="w-60 h-60 object-cover rounded-lg mx-auto mb-4 shadow-md"
-            />
-            <p className="italic mb-3">“I’ve seen a serious difference in how I approach each day. SelfPar gave me the reset button I didn’t know I needed.”</p>
-            <p className="font-semibold">— Shawn M.</p>
+        {/* Content */}
+        <div className="relative z-10 max-w-6xl mx-auto">
+          <h2 className="text-3xl font-bold mb-12">What People Are Saying</h2>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {[
+              {
+                img: "/images/testimonial-marcus.jpg",
+                name: "Marcus H.",
+                quote: "SelfPar helped me finally stay consistent with my habits. There’s something about putting pencil to paper that makes it stick.",
+              },
+              {
+                img: "/images/testimonial-douglas.jpg",
+                name: "Douglas R.",
+                quote: "The golf theme makes it feel like a game — but it’s changed how I show up at work and home.",
+              },
+              {
+                img: "/images/testimonial-shawn.jpg",
+                name: "Shawn L.",
+                quote: "I’ve tried apps before, but nothing has worked like SelfPar. It’s simple, focused, and fun to track progress.",
+              },
+            ].map((t, idx) => (
+              <div key={idx} className="bg-[#1f1f1f] rounded-lg p-6 shadow-md">
+                <img
+                  src={t.img}
+                  alt={t.name}
+                  className="w-42 h-42 rounded-lg object-cover mx-auto mb-6 border-4 border-yellow-400"
+                />
+                <p className="italic text-base text-gray-200 mb-4 leading-relaxed">“{t.quote}”</p>
+                <p className="font-semibold text-white">{t.name}</p>
+              </div>
+            ))}
           </div>
         </div>
       </section>
