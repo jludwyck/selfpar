@@ -48,7 +48,7 @@ export function CartProvider({ children }) {
             ? { ...item, quantity: item.quantity - 1 }
             : item
         )
-        .filter((item) => item.quantity > 0) // Remove items with quantity 0
+        .filter((item) => item.quantity > 0)
     );
   };
 
