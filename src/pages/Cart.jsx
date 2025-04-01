@@ -3,7 +3,12 @@ import { useCart } from '../context/CartContext';
 import { Link } from 'react-router-dom';
 
 export default function Cart() {
-  const { cartItems, removeFromCart, updateQuantity } = useCart();
+  const {
+    cartItems,
+    removeFromCart,
+    increaseQuantity,
+    decreaseQuantity,
+  } = useCart();
 
   const getTotal = () => {
     return cartItems
@@ -50,14 +55,14 @@ export default function Cart() {
                 <h2 className="text-xl font-semibold">{item.name}</h2>
                 <div className="flex items-center space-x-2 mt-2">
                   <button
-                    onClick={() => updateQuantity(item.id, item.quantity - 1)}
+                    onClick={() => decreaseQuantity(item.id)}
                     className="px-2 bg-gray-300 rounded"
                   >
                     -
                   </button>
                   <span>{item.quantity}</span>
                   <button
-                    onClick={() => updateQuantity(item.id, item.quantity + 1)}
+                    onClick={() => increaseQuantity(item.id)}
                     className="px-2 bg-gray-300 rounded"
                   >
                     +
