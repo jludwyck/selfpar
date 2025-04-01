@@ -9,9 +9,32 @@ export function CartProvider({ children }) {
     return savedCart ? JSON.parse(savedCart) : [];
   });
 
+  const [shipping, setShipping] = useState(() => {
+    const saved = localStorage.getItem('shipping');
+    return saved
+      ? JSON.parse(saved)
+      : { country: 'United States', state: '', zip: '' };
+  });
+
+  const [shippingCost, setShippingCost] = useState(null);
+
+  const subtotal = cartItems.reduce(
+    (total, item) => total + item.price * item.quantity,
+    0
+  );
+
+  const total =
+    shippingCost !== null
+      ? parseFloat((subtotal + shippingCost).toFixed(2))
+      : parseFloat(subtotal.toFixed(2));
+
   useEffect(() => {
     localStorage.setItem('cartItems', JSON.stringify(cartItems));
   }, [cartItems]);
+
+  useEffect(() => {
+    localStorage.setItem('shipping', JSON.stringify(shipping));
+  }, [shipping]);
 
   const addToCart = (product) => {
     setCartItems((prev) => {
@@ -57,6 +80,31 @@ export function CartProvider({ children }) {
     localStorage.removeItem('cartItems');
   };
 
+  const handleEstimateShipping = () => {
+    const cost = subtotal >= 50 ? 0 : 5.99;
+    setShippingCost(cost);
+  };
+
+  const handleCheckout = async () => {
+    try {
+      const response = await fetch('/api/create-checkout-session', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ items: cartItems }),
+      });
+
+      const data = await response.json();
+      if (data.url) {
+        window.location.href = data.url;
+      } else {
+        alert('Something went wrong with checkout.');
+      }
+    } catch (error) {
+      console.error('Checkout error:', error);
+      alert('Checkout failed.');
+    }
+  };
+
   return (
     <CartContext.Provider
       value={{
@@ -66,6 +114,14 @@ export function CartProvider({ children }) {
         increaseQuantity,
         decreaseQuantity,
         clearCart,
+        subtotal,
+        total,
+        shipping,
+        setShipping,
+        shippingCost,
+        setShippingCost,
+        handleEstimateShipping,
+        handleCheckout,
       }}
     >
       {children}
