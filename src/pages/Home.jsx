@@ -1,43 +1,53 @@
 import React from 'react';
 import { useCart } from '../context/CartContext';
 import { Link } from 'react-router-dom';
+import { useDrawer } from '../context/DrawerContext';
+import { ShoppingCart } from 'lucide-react';
 
 export default function Home() {
   const { addToCart, cartItems } = useCart();
+  const { openDrawer } = useDrawer(); // 👈 bring in drawer trigger
 
   const starter = {
     id: 'starter',
     name: 'Starter Pack',
     price: 14.99,
-    priceId: 'price_1R8cmbL2lJunKSvx864trGh6' // TEST mode
+    priceId: 'price_1R8cmbL2lJunKSvx864trGh6',
   };
   const standard = {
     id: 'standard',
     name: 'Standard Pack',
     price: 24.99,
-    priceId: 'price_1R8cn2L2lJunKSvxBr9U1AGo' // TEST mode
+    priceId: 'price_1R8cn2L2lJunKSvxBr9U1AGo',
   };
   const annual = {
     id: 'annual',
     name: 'Annual Pack',
     price: 69.99,
-    priceId: 'price_1R8cnML2lJunKSvxBEbEy8Jg' // TEST mode
+    priceId: 'price_1R8cnML2lJunKSvxBEbEy8Jg',
   };
 
   const cartCount = cartItems.reduce((total, item) => total + item.quantity, 0);
+
+  const handleAddToCart = (item) => {
+    addToCart(item);
+    openDrawer();
+  };
 
   return (
     <div className="min-h-screen bg-gray-100 text-gray-800">
       {/* Header with logo, version, and cart */}
       <header className="flex justify-between items-center px-6 py-4 bg-white shadow sticky top-0 z-50">
         <Link to="/" className="text-xl font-bold text-green-800">SelfPar</Link>
-        <div className="text-sm font-bold text-gray-500">v1.0.34</div>
-        <Link
-          to="/cart"
-          className="bg-green-800 text-white px-4 py-2 rounded hover:bg-green-700"
-        >
-          View Cart {cartCount > 0 && <span>({cartCount})</span>}
-        </Link>
+        <div className="text-sm font-bold text-gray-500">v1.0.35</div>
+        <button onClick={openDrawer} className="relative">
+          <ShoppingCart className="w-6 h-6 text-green-800" />
+          {cartCount > 0 && (
+            <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs font-bold px-1.5 py-0.5 rounded-full">
+              {cartCount}
+            </span>
+          )}
+        </button>
       </header>
 
       {/* Hero Section */}
@@ -80,36 +90,22 @@ export default function Home() {
       <section id="shop" className="py-16 px-6 bg-gray-100 text-center">
         <h2 className="text-3xl font-bold mb-10">Shop the Scorecards</h2>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          <div className="bg-white p-6 rounded shadow">
-            <h3 className="text-xl font-semibold mb-2">Starter Pack</h3>
-            <p className="mb-4">3 Cards · Try it out · $14.99</p>
-            <button
-              onClick={() => addToCart(starter)}
-              className="bg-green-800 text-white py-2 px-4 rounded hover:bg-green-700"
-            >
-              Add to Cart
-            </button>
-          </div>
-          <div className="bg-white p-6 rounded shadow">
-            <h3 className="text-xl font-semibold mb-2">Standard Pack</h3>
-            <p className="mb-4">6 Cards · Most popular · $24.99</p>
-            <button
-              onClick={() => addToCart(standard)}
-              className="bg-green-800 text-white py-2 px-4 rounded hover:bg-green-700"
-            >
-              Add to Cart
-            </button>
-          </div>
-          <div className="bg-white p-6 rounded shadow">
-            <h3 className="text-xl font-semibold mb-2">Annual Pack</h3>
-            <p className="mb-4">20 Cards · For a full year · $69.99</p>
-            <button
-              onClick={() => addToCart(annual)}
-              className="bg-green-800 text-white py-2 px-4 rounded hover:bg-green-700"
-            >
-              Add to Cart
-            </button>
-          </div>
+          {[starter, standard, annual].map((pack) => (
+            <div key={pack.id} className="bg-white p-6 rounded shadow">
+              <h3 className="text-xl font-semibold mb-2">{pack.name}</h3>
+              <p className="mb-4">
+                {pack.id === 'starter' && '3 Cards · Try it out · $14.99'}
+                {pack.id === 'standard' && '6 Cards · Most popular · $24.99'}
+                {pack.id === 'annual' && '20 Cards · For a full year · $69.99'}
+              </p>
+              <button
+                onClick={() => handleAddToCart(pack)}
+                className="bg-green-800 text-white py-2 px-4 rounded hover:bg-green-700"
+              >
+                Add to Cart
+              </button>
+            </div>
+          ))}
         </div>
       </section>
 

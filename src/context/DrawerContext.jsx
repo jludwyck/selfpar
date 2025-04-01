@@ -4,13 +4,13 @@ import React, { createContext, useContext, useState } from 'react';
 const DrawerContext = createContext();
 
 export const DrawerProvider = ({ children }) => {
-  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(false); // ✅ renamed from isDrawerOpen
 
-  const openDrawer = () => setIsDrawerOpen(true);
-  const closeDrawer = () => setIsDrawerOpen(false);
+  const openDrawer = () => setIsOpen(true);
+  const closeDrawer = () => setIsOpen(false);
 
   return (
-    <DrawerContext.Provider value={{ isDrawerOpen, openDrawer, closeDrawer }}>
+    <DrawerContext.Provider value={{ isOpen, openDrawer, closeDrawer }}>
       {children}
     </DrawerContext.Provider>
   );
