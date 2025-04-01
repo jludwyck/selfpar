@@ -1,13 +1,25 @@
+// src/pages/Cart.jsx
 import React, { useState } from 'react';
 import { useCart } from '../context/CartContext';
 import { Link } from 'react-router-dom';
+import { countries } from '../data/countries';
+import { states } from '../data/states';
 
 export default function Cart() {
   const { cartItems, removeFromCart, increaseQuantity, decreaseQuantity } = useCart();
-  const [shipping, setShipping] = useState({ country: '', state: '', zip: '' });
+  const [country, setCountry] = useState('United States');
+  const [state, setState] = useState('');
+  const [zip, setZip] = useState('');
+  const [shippingCost, setShippingCost] = useState(null);
 
-  const getTotal = () => {
-    return cartItems.reduce((total, item) => total + item.price * item.quantity, 0).toFixed(2);
+  const getSubtotal = () => {
+    return cartItems.reduce((total, item) => total + item.price * item.quantity, 0);
+  };
+
+  const handleEstimateShipping = () => {
+    const subtotal = getSubtotal();
+    const cost = subtotal >= 50 ? 0 : 5.99;
+    setShippingCost(cost);
   };
 
   const handleCheckout = async () => {
@@ -29,6 +41,9 @@ export default function Cart() {
       alert('Checkout failed.');
     }
   };
+
+  const subtotal = getSubtotal();
+  const total = shippingCost !== null ? subtotal + shippingCost : subtotal;
 
   return (
     <div className="px-6 py-16 max-w-3xl mx-auto">
@@ -59,32 +74,50 @@ export default function Cart() {
           <div className="bg-white p-4 rounded shadow">
             <h3 className="text-lg font-semibold mb-2">Estimate Shipping</h3>
             <div className="space-y-2">
-              <input
-                type="text"
-                placeholder="Country"
-                className="w-full border rounded px-3 py-2 text-sm"
-                value={shipping.country}
-                onChange={(e) => setShipping({ ...shipping, country: e.target.value })}
-              />
-              <input
-                type="text"
-                placeholder="State"
-                className="w-full border rounded px-3 py-2 text-sm"
-                value={shipping.state}
-                onChange={(e) => setShipping({ ...shipping, state: e.target.value })}
-              />
+              <select
+                value={country}
+                onChange={(e) => setCountry(e.target.value)}
+                className="w-full border px-3 py-2 rounded text-sm"
+              >
+                {countries.map((c) => (
+                  <option key={c} value={c}>{c}</option>
+                ))}
+              </select>
+              <select
+                value={state}
+                onChange={(e) => setState(e.target.value)}
+                className="w-full border px-3 py-2 rounded text-sm"
+              >
+                <option value="">Select State</option>
+                {states.map((s) => (
+                  <option key={s} value={s}>{s}</option>
+                ))}
+              </select>
               <input
                 type="text"
                 placeholder="ZIP Code"
-                className="w-full border rounded px-3 py-2 text-sm"
-                value={shipping.zip}
-                onChange={(e) => setShipping({ ...shipping, zip: e.target.value })}
+                className="w-full border px-3 py-2 rounded text-sm"
+                value={zip}
+                onChange={(e) => setZip(e.target.value)}
               />
+              <button
+                onClick={handleEstimateShipping}
+                className="w-full bg-gray-900 text-white py-2 rounded hover:bg-gray-800 text-sm"
+              >
+                Estimate Shipping
+              </button>
             </div>
           </div>
 
-          <div className="text-right mt-8">
-            <p className="text-lg font-bold">Total: ${getTotal()}</p>
+          {/* Totals and Checkout */}
+          <div className="text-right mt-8 space-y-1">
+            <p className="text-md text-gray-700">Subtotal: ${subtotal.toFixed(2)}</p>
+            {shippingCost !== null && (
+              <p className="text-md text-gray-700">
+                Shipping: {shippingCost === 0 ? 'Free' : `$${shippingCost.toFixed(2)}`}
+              </p>
+            )}
+            <p className="text-lg font-bold">Total: ${total.toFixed(2)}</p>
             <button onClick={handleCheckout} className="mt-4 bg-green-800 text-white py-3 px-6 rounded hover:bg-green-700">
               Checkout
             </button>
