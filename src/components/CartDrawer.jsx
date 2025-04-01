@@ -2,8 +2,8 @@
 import React, { useState } from 'react';
 import { useCart } from '../context/CartContext';
 import { useNavigate } from 'react-router-dom';
-import countries from '../data/countries';
-import states from '../data/states';
+import { countries } from '../data/countries';
+import { states } from '../data/states';
 
 export default function CartDrawer({ isOpen, onClose }) {
   const { cartItems, increaseQuantity, decreaseQuantity, removeFromCart } = useCart();
