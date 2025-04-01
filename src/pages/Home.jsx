@@ -117,10 +117,13 @@ export default function Home() {
       {/* Testimonial Section */}
       <section className="py-16 px-6 bg-white text-center">
         <h2 className="text-3xl font-bold mb-10">What People Are Saying</h2>
-        <blockquote className="max-w-xl mx-auto italic text-gray-600">
-          “This is the only habit tracker I've ever actually stuck with. It’s like having a personal caddy for your life.”
-          <footer className="mt-4 font-semibold text-gray-800">— A Real SelfPar User</footer>
-        </blockquote>
+        <div className="max-w-2xl mx-auto bg-gray-50 rounded-lg shadow-md p-6">
+          <img src="/images/testimonial-marcus.jpeg" alt="Testimonial User" className="w-24 h-24 rounded-full mx-auto mb-4 object-cover" />
+          <p className="italic text-gray-600 mb-2">
+            “SelfPar helped me finally stay consistent with my habits. There’s something about putting pencil to paper that makes it stick.”
+          </p>
+          <p className="font-semibold text-gray-800">— Marcus H.</p>
+        </div>
       </section>
 
       {/* Why It Works Section */}
