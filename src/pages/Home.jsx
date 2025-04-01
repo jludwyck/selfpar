@@ -37,7 +37,7 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-gray-100 text-gray-800">
-      {/* Header with logo, navigation, and cart */}
+      {/* Header */}
       <header className="flex justify-between items-center px-6 py-4 bg-white shadow sticky top-0 z-50">
         <Link to="/" className="text-xl font-bold text-green-800">SelfPar</Link>
         <nav className="hidden md:flex space-x-6">
@@ -55,7 +55,7 @@ export default function Home() {
         </button>
       </header>
 
-      {/* Hero Section */}
+      {/* Hero */}
       <section
         className="bg-cover bg-center text-white py-32 px-6 text-center"
         style={{ backgroundImage: "url('/images/hero-image.jpg')" }}
@@ -69,7 +69,7 @@ export default function Home() {
         </a>
       </section>
 
-      {/* How It Works Section */}
+      {/* How It Works */}
       <section id="how" className="py-16 px-6 bg-white text-center">
         <h2 className="text-3xl font-bold mb-10">How It Works</h2>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -91,7 +91,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Product Packs Section */}
+      {/* Shop */}
       <section id="shop" className="py-16 px-6 bg-gray-100 text-center">
         <h2 className="text-3xl font-bold mb-10">Shop the Scorecards</h2>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -114,11 +114,11 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Testimonial Section */}
+      {/* Testimonial */}
       <section className="py-16 px-6 bg-white text-center">
         <h2 className="text-3xl font-bold mb-10">What People Are Saying</h2>
         <div className="max-w-2xl mx-auto bg-gray-50 rounded-lg shadow-md p-6">
-          <img src="public/images/testimonial-marcus.jpg" alt="Testimonial User" className="w-24 h-24 rounded-full mx-auto mb-4 object-cover" />
+          <img src="/images/testimonial-marcus.jpg" alt="Marcus H." className="w-24 h-24 rounded-full mx-auto mb-4 object-cover" />
           <p className="italic text-gray-600 mb-2">
             “SelfPar helped me finally stay consistent with my habits. There’s something about putting pencil to paper that makes it stick.”
           </p>
@@ -126,7 +126,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Why It Works Section */}
+      {/* Why It Works */}
       <section id="why" className="py-16 px-6 bg-gray-100 text-center">
         <h2 className="text-3xl font-bold mb-6">Why SelfPar Works</h2>
         <p className="max-w-2xl mx-auto text-lg text-gray-700">
@@ -134,7 +134,7 @@ export default function Home() {
         </p>
       </section>
 
-      {/* Final CTA Banner */}
+      {/* CTA */}
       <section className="bg-green-800 text-white py-16 px-6 text-center">
         <h2 className="text-3xl font-bold mb-4">Ready to master your next round?</h2>
         <button className="bg-yellow-400 text-black font-semibold py-3 px-6 rounded shadow hover:bg-yellow-300">
