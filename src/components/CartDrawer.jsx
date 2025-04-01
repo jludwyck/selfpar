@@ -1,4 +1,3 @@
-// src/components/CartDrawer.jsx
 import React, { useState } from 'react';
 import { useCart } from '../context/CartContext';
 import { useNavigate } from 'react-router-dom';
@@ -9,13 +8,12 @@ export default function CartDrawer({ isOpen, onClose }) {
   const { cartItems, increaseQuantity, decreaseQuantity, removeFromCart } = useCart();
   const navigate = useNavigate();
 
-  const [country, setCountry] = useState('United States');
+  const [country, setCountry] = useState('US');
   const [state, setState] = useState('');
   const [zip, setZip] = useState('');
   const [shippingCost, setShippingCost] = useState(null);
 
-  const getTotal = () => cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
-  const subtotal = getTotal();
+  const subtotal = cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
   const total = shippingCost !== null ? subtotal + shippingCost : subtotal;
   const progress = Math.min((subtotal / 50) * 100, 100);
 
@@ -101,7 +99,7 @@ export default function CartDrawer({ isOpen, onClose }) {
             className="w-full border px-2 py-1 rounded mb-2"
           >
             {countries.map((c) => (
-              <option key={c} value={c}>{c}</option>
+              <option key={c.code} value={c.code}>{c.name}</option>
             ))}
           </select>
           <select
