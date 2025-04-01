@@ -114,21 +114,38 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Testimonial */}
-      <section className="py-16 px-6 bg-white text-center">
-  <h2 className="text-3xl font-bold mb-10">What People Are Saying</h2>
-  <div className="max-w-2xl mx-auto bg-gray-50 rounded-lg shadow-md p-8">
-    <img
-      src="/images/testimonial-marcus.jpg"
-      alt="Testimonial User"
-      className="w-32 h-32 rounded-full mx-auto mb-6 object-cover shadow"
-    />
-    <p className="italic text-lg text-gray-700 mb-4 leading-relaxed">
-      “SelfPar helped me finally stay consistent with my habits. There’s something about putting pencil to paper that makes it stick.”
-    </p>
-    <p className="font-semibold text-gray-800 text-base">— Marcus H.</p>
-  </div>
-</section>
+      {/* Testimonials */}
+      <section
+        className="py-20 px-6 text-center bg-cover bg-center text-white"
+        style={{ backgroundImage: "url('/images/gold-topo_1920.png')" }}
+      >
+        <h2 className="text-3xl font-bold mb-12 text-white drop-shadow">What People Are Saying</h2>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+          {[
+            {
+              name: 'Marcus H.',
+              quote: 'SelfPar helped me finally stay consistent with my habits. There’s something about putting pencil to paper that makes it stick.',
+              img: '/images/testimonial-marcus.jpg',
+            },
+            {
+              name: 'Douglas K.',
+              quote: 'I’ve used a dozen digital habit trackers. This is the only one that helped me *think* differently about my day.',
+              img: '/images/testimonial-douglas.jpg',
+            },
+            {
+              name: 'Shawn M.',
+              quote: 'It’s simple. It works. And it looks great on my desk. SelfPar has become part of my daily rhythm.',
+              img: '/images/testimonial-shawn.jpg',
+            }
+          ].map((t, i) => (
+            <div key={i} className="bg-white text-gray-800 rounded-lg shadow-lg p-6">
+              <img src={t.img} alt={t.name} className="w-24 h-24 rounded-full mx-auto mb-4 object-cover" />
+              <p className="italic text-sm text-gray-700 mb-3">“{t.quote}”</p>
+              <p className="font-semibold">— {t.name}</p>
+            </div>
+          ))}
+        </div>
+      </section>
 
       {/* Why It Works */}
       <section id="why" className="py-16 px-6 bg-gray-100 text-center">
