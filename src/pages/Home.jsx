@@ -154,7 +154,7 @@ export default function Home() {
                 <img
                   src={t.img}
                   alt={t.name}
-                  className="w-42 h-42 rounded-lg object-cover mx-auto mb-6 border-4 border-white-400"
+                  className="w-42 h-42 rounded-lg object-cover mx-auto mb-6 border-4 border-[#765c41]-200"
                 />
                 <p className="italic text-base text-gray-200 mb-4 leading-relaxed">“{t.quote}”</p>
                 <p className="font-semibold text-white">{t.name}</p>
