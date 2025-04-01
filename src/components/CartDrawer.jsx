@@ -1,3 +1,4 @@
+// src/components/CartDrawer.jsx
 import React, { useState } from 'react';
 import { useCart } from '../context/CartContext';
 import { useNavigate } from 'react-router-dom';
@@ -16,7 +17,6 @@ export default function CartDrawer({ isOpen, onClose }) {
 
   const handleEstimate = () => {
     if (!country || !state || !zip) return;
-    // Simple dummy logic for estimation
     let shipping = 0;
     if (country === 'United States') {
       shipping = getSubtotal() >= 50 ? 0 : 4.99;
@@ -57,8 +57,8 @@ export default function CartDrawer({ isOpen, onClose }) {
         <div className="text-xs text-gray-600 mt-1">${getSubtotal().toFixed(2)} / $50</div>
       </div>
 
-      {/* Cart items */}
-      <div className="overflow-y-auto h-[calc(100%-330px)] px-4">
+      {/* Scrollable area: cart + shipping */}
+      <div className="overflow-y-auto h-[calc(100%-260px)] px-4 pb-4">
         {cartItems.length === 0 ? (
           <p className="text-gray-500 mt-4">Your cart is empty.</p>
         ) : (
@@ -97,48 +97,47 @@ export default function CartDrawer({ isOpen, onClose }) {
             </div>
           ))
         )}
+
+        {/* Estimate Shipping (inside scrollable section) */}
+        <div className="mt-6">
+          <h4 className="text-sm font-semibold mb-2">Estimate Shipping</h4>
+          <select
+            value={country}
+            onChange={(e) => setCountry(e.target.value)}
+            className="w-full border p-2 mb-2 rounded text-sm"
+          >
+            <option value="">Select Country</option>
+            <option value="United States">United States</option>
+            <option value="Canada">Canada</option>
+          </select>
+          <select
+            value={state}
+            onChange={(e) => setState(e.target.value)}
+            className="w-full border p-2 mb-2 rounded text-sm"
+          >
+            <option value="">Select State</option>
+            <option value="AZ">Arizona</option>
+            <option value="CA">California</option>
+            <option value="WA">Washington</option>
+          </select>
+          <input
+            type="text"
+            placeholder="ZIP Code"
+            value={zip}
+            onChange={(e) => setZip(e.target.value)}
+            className="w-full border p-2 mb-2 rounded text-sm"
+          />
+          <button
+            onClick={handleEstimate}
+            className="w-full bg-gray-800 text-white py-2 rounded hover:bg-gray-700 text-sm"
+          >
+            Estimate Shipping
+          </button>
+        </div>
       </div>
 
-      {/* Estimate Shipping */}
-      <div className="px-4 pt-4">
-        <h4 className="text-sm font-semibold mb-2">Estimate Shipping</h4>
-        <select
-          value={country}
-          onChange={(e) => setCountry(e.target.value)}
-          className="w-full border p-2 mb-2 rounded text-sm"
-        >
-          <option value="">Select Country</option>
-          <option value="United States">United States</option>
-          <option value="Canada">Canada</option>
-        </select>
-        <select
-          value={state}
-          onChange={(e) => setState(e.target.value)}
-          className="w-full border p-2 mb-2 rounded text-sm"
-        >
-          <option value="">Select State</option>
-          <option value="AZ">Arizona</option>
-          <option value="CA">California</option>
-          <option value="WA">Washington</option>
-          {/* Add more as needed */}
-        </select>
-        <input
-          type="text"
-          placeholder="ZIP Code"
-          value={zip}
-          onChange={(e) => setZip(e.target.value)}
-          className="w-full border p-2 mb-2 rounded text-sm"
-        />
-        <button
-          onClick={handleEstimate}
-          className="w-full bg-gray-800 text-white py-2 rounded hover:bg-gray-700 text-sm"
-        >
-          Estimate Shipping
-        </button>
-      </div>
-
-      {/* Total and Checkout */}
-      <div className="p-4 border-t mt-2">
+      {/* Checkout section */}
+      <div className="p-4 border-t">
         <div className="flex justify-between text-sm text-gray-700 mb-1">
           <span>Subtotal</span>
           <span>${getSubtotal().toFixed(2)}</span>
@@ -151,10 +150,7 @@ export default function CartDrawer({ isOpen, onClose }) {
         )}
         <div className="flex justify-between font-bold text-lg text-gray-900 mb-4">
           <span>Total</span>
-          <span>
-            $
-            {(getSubtotal() + (estimatedShipping || 0)).toFixed(2)}
-          </span>
+          <span>${(getSubtotal() + (estimatedShipping || 0)).toFixed(2)}</span>
         </div>
         <button
           onClick={handleCheckout}
