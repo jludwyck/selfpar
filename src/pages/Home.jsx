@@ -118,7 +118,7 @@ export default function Home() {
       <section className="py-16 px-6 bg-white text-center">
         <h2 className="text-3xl font-bold mb-10">What People Are Saying</h2>
         <div className="max-w-2xl mx-auto bg-gray-50 rounded-lg shadow-md p-6">
-          <img src="/images/testimonial-marcus.jpeg" alt="Testimonial User" className="w-24 h-24 rounded-full mx-auto mb-4 object-cover" />
+          <img src="public/images/testimonial-marcus.jpg" alt="Testimonial User" className="w-24 h-24 rounded-full mx-auto mb-4 object-cover" />
           <p className="italic text-gray-600 mb-2">
             “SelfPar helped me finally stay consistent with my habits. There’s something about putting pencil to paper that makes it stick.”
           </p>
