@@ -1,10 +1,24 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useCart } from '../context/CartContext';
 import { Link } from 'react-router-dom';
 import { ShoppingCart } from 'lucide-react';
+import { countries } from '../data/countries';
+import { states } from '../data/states';
 
 export default function Cart() {
-  const { cartItems, removeFromCart, increaseQuantity, decreaseQuantity, shipping, setShipping, shippingCost, subtotal, total, handleEstimateShipping, handleCheckout } = useCart();
+  const {
+    cartItems,
+    removeFromCart,
+    increaseQuantity,
+    decreaseQuantity,
+    shipping,
+    setShipping,
+    shippingCost,
+    subtotal,
+    total,
+    handleEstimateShipping,
+    handleCheckout,
+  } = useCart();
 
   return (
     <div className="min-h-screen bg-gray-100 px-6 py-10">
@@ -45,20 +59,27 @@ export default function Cart() {
             <div className="bg-white p-4 rounded shadow">
               <h3 className="text-lg font-semibold mb-2">Estimate Shipping</h3>
               <div className="space-y-2">
-                <input
-                  type="text"
-                  placeholder="Country"
-                  className="w-full border rounded px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-green-300"
+                <select
                   value={shipping.country}
                   onChange={(e) => setShipping({ ...shipping, country: e.target.value })}
-                />
-                <input
-                  type="text"
-                  placeholder="State"
                   className="w-full border rounded px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-green-300"
+                >
+                  {countries.map((c) => (
+                    <option key={c.code} value={c.name}>{c.name}</option>
+                  ))}
+                </select>
+
+                <select
                   value={shipping.state}
                   onChange={(e) => setShipping({ ...shipping, state: e.target.value })}
-                />
+                  className="w-full border rounded px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-green-300"
+                >
+                  <option value="">Select State</option>
+                  {states.map((s) => (
+                    <option key={s} value={s}>{s}</option>
+                  ))}
+                </select>
+
                 <input
                   type="text"
                   placeholder="ZIP Code"
@@ -66,6 +87,7 @@ export default function Cart() {
                   value={shipping.zip}
                   onChange={(e) => setShipping({ ...shipping, zip: e.target.value })}
                 />
+
                 <button onClick={handleEstimateShipping} className="w-full bg-gray-900 text-white py-2 rounded hover:bg-gray-800 mt-2">
                   Estimate Shipping
                 </button>
@@ -78,7 +100,9 @@ export default function Cart() {
             <h3 className="text-xl font-bold mb-4">Summary</h3>
             <p className="text-sm text-gray-700 mb-2">Subtotal: ${subtotal.toFixed(2)}</p>
             {shippingCost !== null && (
-              <p className="text-sm text-gray-700 mb-2">Shipping: {shippingCost === 0 ? 'Free' : `$${shippingCost.toFixed(2)}`}</p>
+              <p className="text-sm text-gray-700 mb-2">
+                Shipping: {shippingCost === 0 ? 'Free' : `$${shippingCost.toFixed(2)}`}
+              </p>
             )}
             <p className="text-lg font-bold text-gray-900 mt-4 mb-6">Total: ${total.toFixed(2)}</p>
             <button onClick={handleCheckout} className="w-full bg-green-800 text-white py-3 rounded hover:bg-green-700 text-lg font-semibold">
