@@ -1,9 +1,15 @@
+// src/components/CartDrawer.jsx
 import React from 'react';
 import { useCart } from '../context/CartContext';
 import { useNavigate } from 'react-router-dom';
 
 export default function CartDrawer({ isOpen, onClose }) {
-  const { cartItems, updateQuantity, removeFromCart } = useCart();
+  const {
+    cartItems,
+    increaseQuantity,
+    decreaseQuantity,
+    removeFromCart,
+  } = useCart();
   const navigate = useNavigate();
 
   const getTotal = () => {
@@ -54,14 +60,14 @@ export default function CartDrawer({ isOpen, onClose }) {
                 <h3 className="text-sm font-semibold text-gray-800">{item.name}</h3>
                 <div className="flex items-center space-x-2 mt-1">
                   <button
-                    onClick={() => updateQuantity(item.id, item.quantity - 1)}
+                    onClick={() => decreaseQuantity(item.id)}
                     className="px-2 bg-gray-200 rounded"
                   >
                     -
                   </button>
                   <span>{item.quantity}</span>
                   <button
-                    onClick={() => updateQuantity(item.id, item.quantity + 1)}
+                    onClick={() => increaseQuantity(item.id)}
                     className="px-2 bg-gray-200 rounded"
                   >
                     +
