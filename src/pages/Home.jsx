@@ -115,37 +115,47 @@ export default function Home() {
       </section>
 
       {/* Testimonials */}
-      <section
-        className="py-20 px-6 text-center bg-cover bg-center text-white"
-        style={{ backgroundImage: "url('/images/gold-topo_1920.png')" }}
-      >
-        <h2 className="text-3xl font-bold mb-12 text-white drop-shadow">What People Are Saying</h2>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
-          {[
-            {
-              name: 'Marcus H.',
-              quote: 'SelfPar helped me finally stay consistent with my habits. There’s something about putting pencil to paper that makes it stick.',
-              img: '/images/testimonial-marcus.jpg',
-            },
-            {
-              name: 'Douglas K.',
-              quote: 'I’ve used a dozen digital habit trackers. This is the only one that helped me *think* differently about my day.',
-              img: '/images/testimonial-douglas.jpg',
-            },
-            {
-              name: 'Shawn M.',
-              quote: 'It’s simple. It works. And it looks great on my desk. SelfPar has become part of my daily rhythm.',
-              img: '/images/testimonial-shawn.jpg',
-            }
-          ].map((t, i) => (
-            <div key={i} className="bg-white text-gray-800 rounded-lg shadow-lg p-6">
-              <img src={t.img} alt={t.name} className="w-24 h-24 rounded-full mx-auto mb-4 object-cover" />
-              <p className="italic text-sm text-gray-700 mb-3">“{t.quote}”</p>
-              <p className="font-semibold">— {t.name}</p>
-            </div>
-          ))}
-        </div>
-      </section>
+      {/* Testimonials */}
+<section
+  className="py-20 px-6 text-white text-center bg-cover bg-center"
+  style={{ backgroundImage: "url('/images/gold topo_1920.png')" }}
+>
+  <h2 className="text-4xl font-bold mb-12 text-white drop-shadow">What People Are Saying</h2>
+  <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+    {/* Testimonial 1 */}
+    <div className="bg-white bg-opacity-90 text-gray-800 rounded-xl p-6 shadow-lg">
+      <img
+        src="/images/testimonial-marcus.jpg"
+        alt="Marcus"
+        className="w-120 h-120 object-cover rounded-lg mx-auto mb-4 shadow-md"
+      />
+      <p className="italic mb-3">“SelfPar helped me finally stay consistent with my habits. There’s something about putting pencil to paper that makes it stick.”</p>
+      <p className="font-semibold">— Marcus H.</p>
+    </div>
+
+    {/* Testimonial 2 */}
+    <div className="bg-white bg-opacity-90 text-gray-800 rounded-xl p-6 shadow-lg">
+      <img
+        src="/images/testimonial-douglas.jpg"
+        alt="Douglas"
+        className="w-120 h-120 object-cover rounded-lg mx-auto mb-4 shadow-md"
+      />
+      <p className="italic mb-3">“I’ve tried every app. This is the first system that feels real and doesn’t overwhelm me. It's built for people who think better on paper.”</p>
+      <p className="font-semibold">— Douglas V.</p>
+    </div>
+
+    {/* Testimonial 3 */}
+    <div className="bg-white bg-opacity-90 text-gray-800 rounded-xl p-6 shadow-lg">
+      <img
+        src="/images/testimonial-shawn.jpg"
+        alt="Shawn"
+        className="w-120 h-120 object-cover rounded-lg mx-auto mb-4 shadow-md"
+      />
+      <p className="italic mb-3">“I’ve seen a serious difference in how I approach each day. SelfPar gave me the reset button I didn’t know I needed.”</p>
+      <p className="font-semibold">— Shawn M.</p>
+    </div>
+  </div>
+</section>
 
       {/* Why It Works */}
       <section id="why" className="py-16 px-6 bg-gray-100 text-center">
