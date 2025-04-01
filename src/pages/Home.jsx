@@ -116,15 +116,19 @@ export default function Home() {
 
       {/* Testimonial */}
       <section className="py-16 px-6 bg-white text-center">
-        <h2 className="text-3xl font-bold mb-10">What People Are Saying</h2>
-        <div className="max-w-2xl mx-auto bg-gray-50 rounded-lg shadow-md p-6">
-          <img src="/images/testimonial-marcus.jpg" alt="Marcus H." className="w-24 h-24 rounded-full mx-auto mb-4 object-cover" />
-          <p className="italic text-gray-600 mb-2">
-            “SelfPar helped me finally stay consistent with my habits. There’s something about putting pencil to paper that makes it stick.”
-          </p>
-          <p className="font-semibold text-gray-800">— Marcus H.</p>
-        </div>
-      </section>
+  <h2 className="text-3xl font-bold mb-10">What People Are Saying</h2>
+  <div className="max-w-2xl mx-auto bg-gray-50 rounded-lg shadow-md p-8">
+    <img
+      src="/images/testimonial-marcus.jpg"
+      alt="Testimonial User"
+      className="w-32 h-32 rounded-full mx-auto mb-6 object-cover shadow"
+    />
+    <p className="italic text-lg text-gray-700 mb-4 leading-relaxed">
+      “SelfPar helped me finally stay consistent with my habits. There’s something about putting pencil to paper that makes it stick.”
+    </p>
+    <p className="font-semibold text-gray-800 text-base">— Marcus H.</p>
+  </div>
+</section>
 
       {/* Why It Works */}
       <section id="why" className="py-16 px-6 bg-gray-100 text-center">
