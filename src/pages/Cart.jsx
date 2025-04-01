@@ -1,4 +1,3 @@
-// src/pages/Cart.jsx
 import React, { useState } from 'react';
 import { useCart } from '../context/CartContext';
 import { Link } from 'react-router-dom';
@@ -12,12 +11,10 @@ export default function Cart() {
   const [zip, setZip] = useState('');
   const [shippingCost, setShippingCost] = useState(null);
 
-  const getSubtotal = () => {
-    return cartItems.reduce((total, item) => total + item.price * item.quantity, 0);
-  };
+  const subtotal = cartItems.reduce((total, item) => total + item.price * item.quantity, 0);
+  const total = shippingCost !== null ? subtotal + shippingCost : subtotal;
 
   const handleEstimateShipping = () => {
-    const subtotal = getSubtotal();
     const cost = subtotal >= 50 ? 0 : 5.99;
     setShippingCost(cost);
   };
@@ -41,9 +38,6 @@ export default function Cart() {
       alert('Checkout failed.');
     }
   };
-
-  const subtotal = getSubtotal();
-  const total = shippingCost !== null ? subtotal + shippingCost : subtotal;
 
   return (
     <div className="px-6 py-16 max-w-3xl mx-auto">
@@ -70,14 +64,14 @@ export default function Cart() {
             </div>
           ))}
 
-          {/* Shipping Estimator */}
+          {/* Estimate Shipping Section */}
           <div className="bg-white p-4 rounded shadow">
             <h3 className="text-lg font-semibold mb-2">Estimate Shipping</h3>
             <div className="space-y-2">
               <select
                 value={country}
                 onChange={(e) => setCountry(e.target.value)}
-                className="w-full border px-3 py-2 rounded text-sm"
+                className="w-full border rounded px-3 py-2 text-sm"
               >
                 {countries.map((c) => (
                   <option key={c} value={c}>{c}</option>
@@ -86,7 +80,7 @@ export default function Cart() {
               <select
                 value={state}
                 onChange={(e) => setState(e.target.value)}
-                className="w-full border px-3 py-2 rounded text-sm"
+                className="w-full border rounded px-3 py-2 text-sm"
               >
                 <option value="">Select State</option>
                 {states.map((s) => (
@@ -96,29 +90,29 @@ export default function Cart() {
               <input
                 type="text"
                 placeholder="ZIP Code"
-                className="w-full border px-3 py-2 rounded text-sm"
+                className="w-full border rounded px-3 py-2 text-sm"
                 value={zip}
                 onChange={(e) => setZip(e.target.value)}
               />
               <button
                 onClick={handleEstimateShipping}
-                className="w-full bg-gray-900 text-white py-2 rounded hover:bg-gray-800 text-sm"
+                className="w-full bg-gray-900 text-white py-2 rounded hover:bg-gray-800"
               >
                 Estimate Shipping
               </button>
             </div>
           </div>
 
-          {/* Totals and Checkout */}
-          <div className="text-right mt-8 space-y-1">
-            <p className="text-md text-gray-700">Subtotal: ${subtotal.toFixed(2)}</p>
+          {/* Totals Section */}
+          <div className="text-right mt-8">
+            <p className="text-lg font-semibold text-gray-800">Subtotal: ${subtotal.toFixed(2)}</p>
             {shippingCost !== null && (
-              <p className="text-md text-gray-700">
+              <p className="text-lg font-semibold text-gray-800">
                 Shipping: {shippingCost === 0 ? 'Free' : `$${shippingCost.toFixed(2)}`}
               </p>
             )}
-            <p className="text-lg font-bold">Total: ${total.toFixed(2)}</p>
-            <button onClick={handleCheckout} className="mt-4 bg-green-800 text-white py-3 px-6 rounded hover:bg-green-700">
+            <p className="text-xl font-bold text-gray-900 mt-2">Total: ${total.toFixed(2)}</p>
+            <button onClick={handleCheckout} className="mt-4 bg-green-800 text-white py-3 px-6 rounded hover:bg-green-700 text-lg font-semibold">
               Checkout
             </button>
           </div>
