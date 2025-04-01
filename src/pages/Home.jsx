@@ -120,7 +120,7 @@ export default function Home() {
         className="py-16 px-6 text-center bg-cover bg-center"
         style={{
           backgroundColor: '#181818',
-          backgroundImage: "url('/images/topo_1920.png')",
+          backgroundImage: "url('/images/gold topo_1920.png')",
           backgroundBlendMode: 'multiply',
         }}
       >
