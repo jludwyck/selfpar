@@ -8,11 +8,11 @@ export default function CartDrawer({ isOpen, onClose }) {
   const navigate = useNavigate();
 
   const [country, setCountry] = useState('United States');
-  const [state, setState] = useState('Arizona');
+  const [state, setState] = useState('');
   const [zip, setZip] = useState('');
-  const [estimatedShipping, setEstimatedShipping] = useState(null);
+  const [shippingCost, setShippingCost] = useState(null);
 
-  const getSubtotal = () => {
+  const getTotal = () => {
     return cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
   };
 
@@ -21,15 +21,15 @@ export default function CartDrawer({ isOpen, onClose }) {
     navigate('/cart');
   };
 
-  const handleEstimateShipping = () => {
-    if (country === 'United States' && getSubtotal() >= 50) {
-      setEstimatedShipping(0.0);
-    } else {
-      setEstimatedShipping(5.99);
+  const handleEstimate = () => {
+    if (country && state && zip) {
+      const subtotal = getTotal();
+      const estimated = subtotal >= 50 ? 0 : 5.99;
+      setShippingCost(estimated);
     }
   };
 
-  const progress = Math.min((getSubtotal() / 50) * 100, 100);
+  const progress = Math.min((getTotal() / 50) * 100, 100);
 
   return (
     <div
@@ -43,20 +43,21 @@ export default function CartDrawer({ isOpen, onClose }) {
         <button onClick={onClose} className="text-gray-500 text-2xl">&times;</button>
       </div>
 
-      {/* Free shipping progress bar */}
-      <div className="px-4 py-2">
-        <div className="text-sm text-gray-700 mb-1">Free U.S. shipping on orders $50+</div>
-        <div className="w-full bg-gray-200 rounded-full h-2.5">
-          <div
-            className="bg-green-600 h-2.5 rounded-full"
-            style={{ width: `${progress}%` }}
-          ></div>
+      {/* Scrollable section */}
+      <div className="overflow-y-auto h-[calc(100%-200px)] px-4 pb-4">
+        {/* Free Shipping Progress */}
+        <div className="py-2">
+          <div className="text-sm text-gray-700 mb-1">Free U.S. shipping on orders $50+</div>
+          <div className="w-full bg-gray-200 rounded-full h-2.5">
+            <div
+              className="bg-green-600 h-2.5 rounded-full"
+              style={{ width: `${progress}%` }}
+            ></div>
+          </div>
+          <div className="text-xs text-gray-600 mt-1">${getTotal().toFixed(2)} / $50</div>
         </div>
-        <div className="text-xs text-gray-600 mt-1">${getSubtotal().toFixed(2)} / $50</div>
-      </div>
 
-      {/* Cart items */}
-      <div className="overflow-y-auto h-[calc(100%-370px)] px-4">
+        {/* Cart Items */}
         {cartItems.length === 0 ? (
           <p className="text-gray-500 mt-4">Your cart is empty.</p>
         ) : (
@@ -95,68 +96,60 @@ export default function CartDrawer({ isOpen, onClose }) {
             </div>
           ))
         )}
+
+        {/* Estimate Shipping */}
+        <div className="mt-6">
+          <h4 className="font-bold text-sm mb-2">Estimate Shipping</h4>
+          <select
+            className="w-full mb-2 p-2 border rounded"
+            value={country}
+            onChange={(e) => setCountry(e.target.value)}
+          >
+            <option value="United States">United States</option>
+            <option value="Canada">Canada</option>
+            <option value="Mexico">Mexico</option>
+          </select>
+          <select
+            className="w-full mb-2 p-2 border rounded"
+            value={state}
+            onChange={(e) => setState(e.target.value)}
+          >
+            <option value="">Select State</option>
+            <option value="Arizona">Arizona</option>
+            <option value="California">California</option>
+            <option value="New York">New York</option>
+            {/* Add more states if needed */}
+          </select>
+          <input
+            type="text"
+            className="w-full mb-2 p-2 border rounded"
+            placeholder="ZIP Code"
+            value={zip}
+            onChange={(e) => setZip(e.target.value)}
+          />
+          <button
+            onClick={handleEstimate}
+            className="w-full bg-gray-900 text-white py-2 rounded hover:bg-gray-800"
+          >
+            Estimate Shipping
+          </button>
+        </div>
       </div>
 
-      {/* Estimate Shipping Section */}
-      <div className="px-4 py-4 border-t bg-gray-50">
-        <h4 className="text-sm font-semibold mb-2">Estimate Shipping</h4>
-        <select
-          value={country}
-          onChange={(e) => setCountry(e.target.value)}
-          className="w-full mb-2 p-2 border rounded text-sm"
-        >
-          <option value="United States">United States</option>
-          <option value="Canada">Canada</option>
-        </select>
-        <select
-          value={state}
-          onChange={(e) => setState(e.target.value)}
-          className="w-full mb-2 p-2 border rounded text-sm"
-        >
-          <option>Arizona</option>
-          <option>California</option>
-          <option>New York</option>
-          <option>Texas</option>
-          <option>Florida</option>
-        </select>
-        <input
-          type="text"
-          placeholder="ZIP Code"
-          value={zip}
-          onChange={(e) => setZip(e.target.value)}
-          className="w-full mb-2 p-2 border rounded text-sm"
-        />
-        <button
-          onClick={handleEstimateShipping}
-          className="w-full bg-gray-800 text-white py-2 rounded hover:bg-gray-700 text-sm"
-        >
-          Estimate Shipping
-        </button>
-      </div>
-
-      {/* Checkout section (now includes shipping breakdown) */}
+      {/* Bottom Totals Section */}
       <div className="p-4 border-t">
-        <div className="flex justify-between text-sm text-gray-700 mb-1">
-          <span>Subtotal</span>
-          <span>${getSubtotal().toFixed(2)}</span>
-        </div>
-        <div className="flex justify-between text-sm text-gray-700 mb-1">
-          <span>Shipping</span>
-          <span>
-            {estimatedShipping === null ? (
-              <span className="text-gray-400">—</span>
-            ) : (
-              `$${estimatedShipping.toFixed(2)}`
-            )}
-          </span>
-        </div>
-        <div className="flex justify-between font-bold text-lg text-gray-900 mb-4">
-          <span>Total</span>
-          <span>${(getSubtotal() + (estimatedShipping || 0)).toFixed(2)}</span>
-        </div>
+        <p className="text-sm text-gray-600 mb-1">Subtotal: ${getTotal().toFixed(2)}</p>
+        {shippingCost !== null && (
+          <p className="text-sm text-gray-600 mb-1">
+            Shipping: {shippingCost === 0 ? 'Free' : `$${shippingCost.toFixed(2)}`}
+          </p>
+        )}
+        <p className="text-lg font-bold text-gray-800 mt-2">
+          Total: ${(getTotal() + (shippingCost || 0)).toFixed(2)}
+        </p>
         <button
           onClick={handleCheckout}
-          className="w-full bg-green-700 text-white py-2 rounded hover:bg-green-600"
+          className="w-full mt-4 bg-green-700 text-white py-2 rounded hover:bg-green-600"
         >
           View Cart / Checkout
         </button>
